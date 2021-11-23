@@ -1,7 +1,7 @@
 # Проект «Киноман»
 
-* Студент: [Александр Кучер](https://up.htmlacademy.ru/ecmascript/16/user/1744861).
-* Наставник: `Неизвестно`.
+- Студент: [Александр Кучер](https://up.htmlacademy.ru/ecmascript/16/user/1744861).
+- Наставник: [Евгений Фаллер](https://htmlacademy.ru/profile/id505933).
 
 ---
 
