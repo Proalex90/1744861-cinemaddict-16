@@ -5,6 +5,7 @@ import { creatButtonShowMore } from './view/show-more.js';
 import { creatStatsTemplate } from './view/stats.js';
 import { creatPopupFilmDetails } from './view/popup.js';
 import { createProfileHeaderTemplate } from './view/profile.js';
+import { generateFilmCard } from './mocks/film.js';
 
 const siteHeaderElement = document.querySelector('.header');
 const siteMainElement = document.querySelector('.main');
@@ -28,11 +29,15 @@ renderTemplate(siteMainElement, creatFilmsTemlate(), RenderPosition.BEFOREEND);
 const siteFilmsElement = siteMainElement.querySelector('.films');
 const siteFilmsContainer = siteFilmsElement.querySelector('.films-list__container');
 
-for (let i = 0; i < 5; i++) {
-  renderTemplate(siteFilmsContainer, creatCardFilm(), RenderPosition.BEFOREEND);
+const COUNT_FILMS = 5;
+
+const films = Array.from({ length: COUNT_FILMS }, generateFilmCard);
+for (let i = 0; i < COUNT_FILMS; i++) {
+  renderTemplate(siteFilmsContainer, creatCardFilm(films[i]), RenderPosition.BEFOREEND);
 }
 
 renderTemplate(siteFilmsContainer, creatButtonShowMore(), RenderPosition.AFTEREND);
+
 
 renderTemplate(siteMainElement, creatStatsTemplate(), RenderPosition.BEFOREEND);
 const statisticElement = document.querySelector('.statistic');
