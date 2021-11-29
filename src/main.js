@@ -30,8 +30,9 @@ const siteFilmsElement = siteMainElement.querySelector('.films');
 const siteFilmsContainer = siteFilmsElement.querySelector('.films-list__container');
 
 const COUNT_FILMS = 5;
-
-const films = Array.from({ length: COUNT_FILMS }, generateFilmCard);
+const ALL_FILMS = 20;
+const films = Array.from({ length: ALL_FILMS }, generateFilmCard);
+console.log(films);
 for (let i = 0; i < COUNT_FILMS; i++) {
   renderTemplate(siteFilmsContainer, creatCardFilm(films[i]), RenderPosition.BEFOREEND);
 }
