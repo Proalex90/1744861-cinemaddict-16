@@ -31,8 +31,7 @@ renderTemplate(siteMainElement, creatFilmsTemlate(), RenderPosition.BEFOREEND);
 const siteFilmsElement = siteMainElement.querySelector('.films');
 const siteFilmsContainer = siteFilmsElement.querySelector('.films-list__container');
 
-const COUNT_FILMS = 5;
-const ALL_FILMS = 20;
+const ALL_FILMS = 23;
 const FILMS_COUNT_PER_STEP = 5;
 const films = Array.from({ length: ALL_FILMS }, generateFilmCard);
 for (let i = 0; i < Math.min(films.length, FILMS_COUNT_PER_STEP); i++) {
@@ -48,7 +47,7 @@ if (films.length > FILMS_COUNT_PER_STEP) {
     evt.preventDefault();
     films
       .slice(renderedFilmsCount, renderedFilmsCount + FILMS_COUNT_PER_STEP)
-      .forEach((film) => renderTemplate(siteFilmsContainer, creatCardFilm(film), RenderPosition.BEFOREEND))
+      .forEach((film) => renderTemplate(siteFilmsContainer, creatCardFilm(film), RenderPosition.BEFOREEND));
     renderedFilmsCount += FILMS_COUNT_PER_STEP;
 
     if (renderedFilmsCount >= films.length) {
@@ -65,12 +64,10 @@ films[0].comments.forEach((element) => {
   renderTemplate(commentsContainer, creatComment(element), RenderPosition.BEFOREEND);
 });
 
-//временный функционал
-buttonShowMore.style.boxShadow = '0 0 30px 10px red';
-buttonShowMore.innerHTML = 'Открыть/закрыть POPUP';
+
+const closeButton = document.querySelector('.film-details__close-btn');
 const filmDetails = document.querySelector('.film-details');
-filmDetails.classList.add('visually-hidden');
-buttonShowMore.addEventListener('click', () => {
+closeButton.addEventListener('click', () => {
   filmDetails.classList.toggle('visually-hidden');
 });
 //временный функционал

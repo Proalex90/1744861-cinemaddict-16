@@ -2,7 +2,7 @@ import { getDurationInFormat, getClassNameUserControleBar } from '../utils.js';
 const activeClassName = 'film-details__control-button--active';
 
 export const creatPopupFilmDetails = (film) => {
-  const { id, comments, filmInfo: { poster, title, originTitle, reating, ageRating, director, writers }, actors, release: { data, releaseCountry }, runtime, genre, description, userDetails } = film;
+  const { comments, filmInfo: { poster, title, originTitle, reating, ageRating, director, writers }, actors, release: { data, releaseCountry }, runtime, description, } = film;
   const [addClassToAddToWatchlist, addClassToMarkAsWatched, addClassToFavorite] = getClassNameUserControleBar(film, activeClassName);
 
   const createComments = () => `<div class="film-details__bottom-container">
