@@ -5,7 +5,8 @@ import SiteMenuSortView from './view/menu-sort.js';
 import SiteFilmsView from './view/films.js';
 import ButtonMoreView from './view/show-more.js';
 import { creatCardFilm } from './view/card-film.js';
-import { createFilmsExtra } from './view/films-extra.js';
+import SiteFilmsExtraRatedView from './view/films-extra-rated.js';
+import SiteFilmsExtraCommentedView from './view/films-extra-commented.js';
 import { creatStatsTemplate } from './view/stats.js';
 import { creatPopupFilmDetails } from './view/popup.js';
 import { generateFilmCard } from './mocks/film.js';
@@ -25,6 +26,7 @@ const filmsListComponent = new SiteFilmsView();//Новый экземпляр �
 renderElement(siteMainElement, filmsListComponent.element, RenderPosition.BEFOREEND);
 const siteFilmsContainer = filmsListComponent.element.querySelector('.films-list__container');//Ищем в экземпляре необходимое место вставки карточки фильма
 
+//Films
 const ALL_FILMS = 23;
 const FILMS_COUNT_PER_STEP = 5;
 const films = Array.from({ length: ALL_FILMS }, generateFilmCard);
@@ -49,7 +51,9 @@ if (films.length > FILMS_COUNT_PER_STEP) {
   });
 }
 
-renderTemplate(filmsListComponent.element, createFilmsExtra(), RenderPosition.BEFOREEND);
+//Extra
+renderElement(filmsListComponent.element, new SiteFilmsExtraRatedView().element, RenderPosition.BEFOREEND);
+renderElement(filmsListComponent.element, new SiteFilmsExtraCommentedView().element, RenderPosition.BEFOREEND);
 const FILMS_EXTRA_COUNT = 2;
 const siteFilmsExtra = document.querySelectorAll('.films-list--extra');
 const siteFilmsExtraContainerTopRated = siteFilmsExtra[0].querySelector('.films-list__container');
@@ -82,6 +86,6 @@ const statisticElement = document.querySelector('.statistic');
 statisticElement.classList.add('visually-hidden'); //временный функционал
 
 
-renderElement(siteFooter, new SiteFooterStatisticsView(), RenderPosition.BEFOREEND);
+renderElement(siteFooter, new SiteFooterStatisticsView().element, RenderPosition.BEFOREEND);
 
 
