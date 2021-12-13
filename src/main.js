@@ -1,5 +1,6 @@
-import { renderTemplate, renderElement } from './render.js';
-import { createMenuTemlate } from './view/menu.js';
+import { renderTemplate, renderElement, RenderPosition } from './render.js';
+import SiteMenuView from './view/menu.js';
+import SiteMenuSortView from './view/menu-sort.js';
 import { creatCardFilm } from './view/card-film.js';
 import { creatFilmsTemlate } from './view/films.js';
 import { creatButtonShowMore } from './view/show-more.js';
@@ -15,7 +16,9 @@ const siteFooter = document.querySelector('.footer');
 
 
 renderTemplate(siteHeaderElement, createProfileHeaderTemplate(), RenderPosition.BEFOREEND);
-renderTemplate(siteMainElement, createMenuTemlate(), RenderPosition.BEFOREEND);
+
+renderElement(siteMainElement, new SiteMenuView().element, RenderPosition.BEFOREEND);
+renderElement(siteMainElement, new SiteMenuSortView().element, RenderPosition.BEFOREEND);
 renderTemplate(siteMainElement, creatFilmsTemlate(), RenderPosition.BEFOREEND);
 
 const siteFilmsElement = siteMainElement.querySelector('.films');
