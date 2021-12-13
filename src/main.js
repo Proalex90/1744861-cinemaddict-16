@@ -1,3 +1,4 @@
+import { renderTemplate, renderElement } from './render.js';
 import { createMenuTemlate } from './view/menu.js';
 import { creatCardFilm } from './view/card-film.js';
 import { creatFilmsTemlate } from './view/films.js';
@@ -12,17 +13,6 @@ const siteHeaderElement = document.querySelector('.header');
 const siteMainElement = document.querySelector('.main');
 const siteFooter = document.querySelector('.footer');
 
-const RenderPosition = {
-  BEFOREBEGIN: 'beforebegin',
-  AFTERBEGIN: 'afterbegin',
-  BEFOREEND: 'beforeend',
-  AFTEREND: 'afterend',
-};
-
-
-const renderTemplate = (container, template, place) => {
-  container.insertAdjacentHTML(place, template);
-};
 
 renderTemplate(siteHeaderElement, createProfileHeaderTemplate(), RenderPosition.BEFOREEND);
 renderTemplate(siteMainElement, createMenuTemlate(), RenderPosition.BEFOREEND);
