@@ -1,16 +1,16 @@
-import { renderTemplate, renderElement, RenderPosition } from './render.js';
+import { renderElement, RenderPosition } from './render.js';
 import SiteMenuView from './view/menu.js';
 import SiteProfileView from './view/profile.js';
 import SiteMenuSortView from './view/menu-sort.js';
 import SiteFilmsView from './view/films.js';
 import ButtonMoreView from './view/show-more.js';
-import { creatCardFilm } from './view/card-film.js';
+import FilmView from './view/card-film.js';
 import SiteFilmsExtraRatedView from './view/films-extra-rated.js';
 import SiteFilmsExtraCommentedView from './view/films-extra-commented.js';
-import { creatStatsTemplate } from './view/stats.js';
-import { creatPopupFilmDetails } from './view/popup.js';
+import SiteStatsView from './view/stats.js';
+import PopupFilmDetailsView from './view/popup.js';
 import { generateFilmCard } from './mocks/film.js';
-import { creatComment } from './view/comment.js';
+import CommentView from './view/comment.js';
 import SiteFooterStatisticsView from './view/footer-statistics.js';
 const siteHeaderElement = document.querySelector('.header');
 const siteMainElement = document.querySelector('.main');
@@ -31,7 +31,7 @@ const ALL_FILMS = 23;
 const FILMS_COUNT_PER_STEP = 5;
 const films = Array.from({ length: ALL_FILMS }, generateFilmCard);
 for (let i = 0; i < Math.min(films.length, FILMS_COUNT_PER_STEP); i++) {
-  renderTemplate(siteFilmsContainer, creatCardFilm(films[i]), RenderPosition.BEFOREEND);
+  renderElement(siteFilmsContainer, new FilmView(films[i]).element, RenderPosition.BEFOREEND);
 }
 
 if (films.length > FILMS_COUNT_PER_STEP) {
@@ -42,7 +42,7 @@ if (films.length > FILMS_COUNT_PER_STEP) {
     evt.preventDefault();
     films
       .slice(renderedFilmsCount, renderedFilmsCount + FILMS_COUNT_PER_STEP)
-      .forEach((film) => renderTemplate(siteFilmsContainer, creatCardFilm(film), RenderPosition.BEFOREEND));
+      .forEach((film) => renderElement(siteFilmsContainer, new FilmView(film).element, RenderPosition.BEFOREEND));
     renderedFilmsCount += FILMS_COUNT_PER_STEP;
 
     if (renderedFilmsCount >= films.length) {
@@ -54,23 +54,23 @@ if (films.length > FILMS_COUNT_PER_STEP) {
 //Extra
 renderElement(filmsListComponent.element, new SiteFilmsExtraRatedView().element, RenderPosition.BEFOREEND);
 renderElement(filmsListComponent.element, new SiteFilmsExtraCommentedView().element, RenderPosition.BEFOREEND);
+
 const FILMS_EXTRA_COUNT = 2;
 const siteFilmsExtra = document.querySelectorAll('.films-list--extra');
 const siteFilmsExtraContainerTopRated = siteFilmsExtra[0].querySelector('.films-list__container');
 const siteFilmsExtraContainerMostCommented = siteFilmsExtra[1].querySelector('.films-list__container');
 
 for (let i = 0; i < FILMS_EXTRA_COUNT; i++) {
-  renderTemplate(siteFilmsExtraContainerTopRated, creatCardFilm(films[i]), RenderPosition.BEFOREEND);
+  renderElement(siteFilmsExtraContainerTopRated, new FilmView((films[i])).element, RenderPosition.BEFOREEND);
 }
 for (let i = 0; i < FILMS_EXTRA_COUNT; i++) {
-  renderTemplate(siteFilmsExtraContainerMostCommented, creatCardFilm(films[i]), RenderPosition.BEFOREEND);
+  renderElement(siteFilmsExtraContainerMostCommented, new FilmView((films[i])).element, RenderPosition.BEFOREEND);
 }
 
-renderTemplate(siteFooter, creatPopupFilmDetails(films[0]), RenderPosition.AFTEREND);
-
+renderElement(siteFooter, new PopupFilmDetailsView(films[0]).element, RenderPosition.AFTEREND);
 const commentsContainer = document.querySelector('.film-details__comments-list');
 films[0].comments.forEach((element) => {
-  renderTemplate(commentsContainer, creatComment(element), RenderPosition.BEFOREEND);
+  renderElement(commentsContainer, new CommentView(element).element, RenderPosition.BEFOREEND);
 });
 
 
@@ -78,10 +78,9 @@ const closeButton = document.querySelector('.film-details__close-btn');
 const filmDetails = document.querySelector('.film-details');
 closeButton.addEventListener('click', () => {
   filmDetails.classList.toggle('visually-hidden');
-});
-//временный функционал
+});//временный функционал
 
-renderTemplate(siteMainElement, creatStatsTemplate(), RenderPosition.BEFOREEND);
+renderElement(siteMainElement, new SiteStatsView().element, RenderPosition.BEFOREEND);
 const statisticElement = document.querySelector('.statistic');
 statisticElement.classList.add('visually-hidden'); //временный функционал
 
