@@ -10,6 +10,7 @@ import { creatStatsTemplate } from './view/stats.js';
 import { creatPopupFilmDetails } from './view/popup.js';
 import { generateFilmCard } from './mocks/film.js';
 import { creatComment } from './view/comment.js';
+import SiteFooterStatisticsView from './view/footer-statistics.js';
 const siteHeaderElement = document.querySelector('.header');
 const siteMainElement = document.querySelector('.main');
 const siteFooter = document.querySelector('.footer');
@@ -79,5 +80,8 @@ closeButton.addEventListener('click', () => {
 renderTemplate(siteMainElement, creatStatsTemplate(), RenderPosition.BEFOREEND);
 const statisticElement = document.querySelector('.statistic');
 statisticElement.classList.add('visually-hidden'); //временный функционал
+
+
+renderElement(siteFooter, new SiteFooterStatisticsView(), RenderPosition.BEFOREEND);
 
 
