@@ -1,28 +1,27 @@
 import { renderTemplate, renderElement, RenderPosition } from './render.js';
 import SiteMenuView from './view/menu.js';
 import SiteMenuSortView from './view/menu-sort.js';
+import SiteFilmsView from './view/films.js';
 import { creatCardFilm } from './view/card-film.js';
-import { creatFilmsTemlate } from './view/films.js';
 import { creatButtonShowMore } from './view/show-more.js';
 import { creatStatsTemplate } from './view/stats.js';
 import { creatPopupFilmDetails } from './view/popup.js';
 import { createProfileHeaderTemplate } from './view/profile.js';
 import { generateFilmCard } from './mocks/film.js';
 import { creatComment } from './view/comment.js';
-
 const siteHeaderElement = document.querySelector('.header');
 const siteMainElement = document.querySelector('.main');
 const siteFooter = document.querySelector('.footer');
 
 
-renderTemplate(siteHeaderElement, createProfileHeaderTemplate(), RenderPosition.BEFOREEND);
+renderTemplate(siteHeaderElement, createProfileHeaderTemplate(), RenderPosition.BEFOREEND); //Элемент профайла
 
-renderElement(siteMainElement, new SiteMenuView().element, RenderPosition.BEFOREEND);
-renderElement(siteMainElement, new SiteMenuSortView().element, RenderPosition.BEFOREEND);
-renderTemplate(siteMainElement, creatFilmsTemlate(), RenderPosition.BEFOREEND);
+renderElement(siteMainElement, new SiteMenuView().element, RenderPosition.BEFOREEND); //Основное меню
+renderElement(siteMainElement, new SiteMenuSortView().element, RenderPosition.BEFOREEND);//Сортировка основного меню
 
-const siteFilmsElement = siteMainElement.querySelector('.films');
-const siteFilmsContainer = siteFilmsElement.querySelector('.films-list__container');
+const filmsListComponent = new SiteFilmsView();//Новый экземпляр пустого списка фильмов
+renderElement(siteMainElement, filmsListComponent.element, RenderPosition.BEFOREEND);
+const siteFilmsContainer = filmsListComponent.element.querySelector('.films-list__container');//Ищем в экземпляре необходимое место вставки карточки фильма
 
 const ALL_FILMS = 23;
 const FILMS_COUNT_PER_STEP = 5;

@@ -1,5 +1,6 @@
-export const creatFilmsTemlate = () => `
-  <section class="films">
+import { createElement } from '../render.js';
+
+const creatFilmsTemlate = () => `<section class="films">
     <section class="films-list">
       <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
       <div class="films-list__container">
@@ -8,3 +9,21 @@ export const creatFilmsTemlate = () => `
     </section>
   </section>`;
 
+export default class SiteFilmsView {
+  #element = null;
+
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
+    }
+    return this.#element;
+  }
+
+  get template() {
+    return creatFilmsTemlate();
+  }
+
+  removeElement() {
+    this.#element = null;
+  }
+}
