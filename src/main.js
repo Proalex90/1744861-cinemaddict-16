@@ -1,4 +1,5 @@
 import { render, RenderPosition } from './render.js';
+import { onKeyDownEsc } from './utils.js';
 import SiteMenuView from './view/menu.js';
 import SiteProfileView from './view/profile.js';
 import SiteMenuSortView from './view/menu-sort.js';
@@ -80,7 +81,9 @@ const getChoosenFilmElement = (array) => (evt) => {
     const closeButton = currentFilmComponent.element.querySelector('.film-details__close-btn');
     const parentElement = document.querySelector('body');
     const removeElement = () => parentElement.removeChild(currentFilmComponent.element);
+
     closeButton.addEventListener('click', removeElement);
+    document.querySelector('body').addEventListener('keydown', (evtEsc) => onKeyDownEsc(evtEsc, removeElement));
 
   }
 };
