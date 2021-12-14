@@ -21,7 +21,7 @@ const getEmoji = (comment) => {
   }
 };
 
-const creatComment = (comment) => `<li class="film-details__comment">
+const createComment = (comment) => `<li class="film-details__comment">
   <span class="film-details__comment-emoji">
     <img src=${getEmoji(comment)} width="55" height="55" alt="emoji-${comment.reaction}">
   </span>
@@ -51,7 +51,7 @@ export default class CommentView {
   }
 
   get template() {
-    return creatComment(this.#comment);
+    return createComment(this.#comment);
   }
 
   removeElement() {

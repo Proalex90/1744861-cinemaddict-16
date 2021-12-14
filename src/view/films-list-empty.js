@@ -1,10 +1,12 @@
 import { createElement } from '../render.js';
 
-const createFooterStatistics = () => `<section class="footer__statistics">
-<p>130 291 movies inside</p>
+const createFilmsListEmptyTemlate = () => `<section class="films">
+<section class="films-list">
+  <h2 class="films-list__title">There are no movies in our database</h2>
+</section>
 </section>`;
 
-export default class SiteFooterStatisticsView {
+export default class FilmsListEmptyView {
   #element = null;
 
   get element() {
@@ -15,7 +17,7 @@ export default class SiteFooterStatisticsView {
   }
 
   get template() {
-    return createFooterStatistics();
+    return createFilmsListEmptyTemlate();
   }
 
   removeElement() {

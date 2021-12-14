@@ -2,7 +2,7 @@ import { getDurationInFormat, getClassNameUserControleBar } from '../utils.js';
 import { createElement } from '../render.js';
 
 const activeClassName = 'film-card__controls-item--active';
-export const creatCardFilm = (film) => {
+export const createCardFilm = (film) => {
   const { id, comments, filmInfo: { poster, title, reating }, release: { data }, runtime, genre, description } = film;
   const [addClassToAddToWatchlist, addClassToMarkAsWatched, addClassToFavorite] = getClassNameUserControleBar(film, activeClassName);
   return `<article class="film-card">
@@ -41,7 +41,7 @@ export default class FilmView {
   }
 
   get template() {
-    return creatCardFilm(this.#film);
+    return createCardFilm(this.#film);
   }
 
   removeElement() {
