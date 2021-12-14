@@ -20,16 +20,14 @@ const siteFooter = document.querySelector('.footer');
 
 
 render(siteHeaderElement, new SiteProfileView().element, RenderPosition.BEFOREEND); //Элемент профайла
-
 render(siteMainElement, new SiteMenuView().element, RenderPosition.BEFOREEND); //Основное меню
 render(siteMainElement, new SiteMenuSortView().element, RenderPosition.BEFOREEND);//Сортировка основного меню
-
 const filmsListComponent = new SiteFilmsView();//Новый экземпляр пустого списка фильмов
 render(siteMainElement, filmsListComponent.element, RenderPosition.BEFOREEND);
 const siteFilmsContainer = filmsListComponent.element.querySelector('.films-list__container');//Ищем в экземпляре необходимое место вставки карточки фильма
 
 //Films
-const ALL_FILMS = 0;
+const ALL_FILMS = 23;
 const FILMS_COUNT_PER_STEP = 5;
 const films = Array.from({ length: ALL_FILMS }, generateFilmCard);
 if (films.length === 0) {
@@ -92,9 +90,8 @@ const getChoosenFilmElement = (array) => (evt) => {
   }
 };
 
-const onCardFilmClick = (array) => document.querySelector('.films').addEventListener('click', getChoosenFilmElement(array));
+document.querySelector('.films').addEventListener('click', getChoosenFilmElement(films));
 
-onCardFilmClick(films);
 
 render(siteMainElement, new SiteStatsView().element, RenderPosition.BEFOREEND);
 const statisticElement = document.querySelector('.statistic');
@@ -102,5 +99,3 @@ statisticElement.classList.add('visually-hidden'); //временный функ
 
 
 render(siteFooter, new SiteFooterStatisticsView().element, RenderPosition.BEFOREEND);
-
-

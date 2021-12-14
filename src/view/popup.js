@@ -3,7 +3,7 @@ import { createElement } from '../render.js';
 
 const activeClassName = 'film-details__control-button--active';
 
-const creatPopupFilmDetails = (film) => {
+const createPopupFilmDetails = (film) => {
   const { comments, filmInfo: { poster, title, originTitle, reating, ageRating, director, writers }, actors, release: { data, releaseCountry }, runtime, description, } = film;
   const [addClassToAddToWatchlist, addClassToMarkAsWatched, addClassToFavorite] = getClassNameUserControleBar(film, activeClassName);
 
@@ -138,7 +138,7 @@ export default class PopupFilmDetailsView {
   }
 
   get template() {
-    return creatPopupFilmDetails(this.#film);
+    return createPopupFilmDetails(this.#film);
   }
 
   removeElement() {

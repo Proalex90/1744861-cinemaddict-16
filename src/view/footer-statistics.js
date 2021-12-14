@@ -1,6 +1,6 @@
 import { createElement } from '../render.js';
 
-const creatFooterStatistics = () => `<section class="footer__statistics">
+const createFooterStatistics = () => `<section class="footer__statistics">
 <p>130 291 movies inside</p>
 </section>`;
 
@@ -15,7 +15,7 @@ export default class SiteFooterStatisticsView {
   }
 
   get template() {
-    return creatFooterStatistics();
+    return createFooterStatistics();
   }
 
   removeElement() {

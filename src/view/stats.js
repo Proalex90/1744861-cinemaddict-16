@@ -1,6 +1,6 @@
 import { createElement } from '../render.js';
 
-const creatStatsTemplate = () => `<section class="statistic">
+const createStatsTemplate = () => `<section class="statistic">
 <p class="statistic__rank">
   Your rank
   <img class="statistic__img" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
@@ -61,7 +61,7 @@ export default class SiteStatsView {
   }
 
   get template() {
-    return creatStatsTemplate();
+    return createStatsTemplate();
   }
 
   removeElement() {
