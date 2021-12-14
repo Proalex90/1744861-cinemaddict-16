@@ -26,7 +26,7 @@ const getRandomArray = (array) => {
 
 
 export const generateFilmCard = () => ({
-  id: 0,
+  id: getRandomInteger(0, 5000),
   comments: comment(),
   filmInfo: {
     title: TITLES[getRandomInteger(0, TITLES.length - 1)],

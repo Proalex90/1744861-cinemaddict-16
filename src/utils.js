@@ -19,3 +19,11 @@ export const getClassNameUserControleBar = (film, activeClassName) => {
   const classArray = [addClassToAddToWatchlist, addClassToMarkAsWatched, addClassToFavorite];
   return classArray;
 };
+
+const isEscapeKey = (evt) => evt.key === 'Escape';
+export const onKeyDownEsc = (evt, action) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    action();
+  }
+};

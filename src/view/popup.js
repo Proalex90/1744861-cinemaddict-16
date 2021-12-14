@@ -1,7 +1,9 @@
 import { getDurationInFormat, getClassNameUserControleBar } from '../utils.js';
+import { createElement } from '../render.js';
+
 const activeClassName = 'film-details__control-button--active';
 
-export const creatPopupFilmDetails = (film) => {
+const creatPopupFilmDetails = (film) => {
   const { comments, filmInfo: { poster, title, originTitle, reating, ageRating, director, writers }, actors, release: { data, releaseCountry }, runtime, description, } = film;
   const [addClassToAddToWatchlist, addClassToMarkAsWatched, addClassToFavorite] = getClassNameUserControleBar(film, activeClassName);
 
@@ -119,3 +121,27 @@ ${description}        </p>
 </form>
 </section>`;
 };
+
+export default class PopupFilmDetailsView {
+  #element = null;
+  #film = null;
+
+  constructor(film) {
+    this.#film = film;
+  }
+
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
+    }
+    return this.#element;
+  }
+
+  get template() {
+    return creatPopupFilmDetails(this.#film);
+  }
+
+  removeElement() {
+    this.#element = null;
+  }
+}

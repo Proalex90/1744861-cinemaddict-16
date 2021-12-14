@@ -1,3 +1,5 @@
+import { createElement } from '../render.js';
+
 const reaction = {
   smile: './images/emoji/smile.png',
   sleeping: './images/emoji/sleeping.png',
@@ -19,7 +21,7 @@ const getEmoji = (comment) => {
   }
 };
 
-export const creatComment = (comment) => `<li class="film-details__comment">
+const creatComment = (comment) => `<li class="film-details__comment">
   <span class="film-details__comment-emoji">
     <img src=${getEmoji(comment)} width="55" height="55" alt="emoji-${comment.reaction}">
   </span>
@@ -32,3 +34,27 @@ export const creatComment = (comment) => `<li class="film-details__comment">
     </p>
   </div>
 </li>`;
+
+export default class CommentView {
+  #element = null;
+  #comment = null;
+
+  constructor(comment) {
+    this.#comment = comment;
+  }
+
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
+    }
+    return this.#element;
+  }
+
+  get template() {
+    return creatComment(this.#comment);
+  }
+
+  removeElement() {
+    this.#element = null;
+  }
+}

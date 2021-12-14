@@ -1,10 +1,12 @@
 import { createElement } from '../render.js';
 
+const createFilmsExtraRated = () => `<section class="films-list films-list--extra">
+<h2 class="films-list__title">Top rated</h2>
+<div class="films-list__container">
+</div>
+</section>`;
 
-const createButtonShowMore = () => `<button class="films-list__show-more">Show more
-</button>`;
-
-export default class ButtonMoreView {
+export default class SiteFilmsExtraRatedView {
   #element = null;
 
   get element() {
@@ -15,7 +17,7 @@ export default class ButtonMoreView {
   }
 
   get template() {
-    return createButtonShowMore();
+    return createFilmsExtraRated();
   }
 
   removeElement() {

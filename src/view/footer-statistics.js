@@ -1,10 +1,10 @@
 import { createElement } from '../render.js';
 
+const creatFooterStatistics = () => `<section class="footer__statistics">
+<p>130 291 movies inside</p>
+</section>`;
 
-const createButtonShowMore = () => `<button class="films-list__show-more">Show more
-</button>`;
-
-export default class ButtonMoreView {
+export default class SiteFooterStatisticsView {
   #element = null;
 
   get element() {
@@ -15,7 +15,7 @@ export default class ButtonMoreView {
   }
 
   get template() {
-    return createButtonShowMore();
+    return creatFooterStatistics();
   }
 
   removeElement() {
