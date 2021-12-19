@@ -75,15 +75,6 @@ const getChoosenFilmElement = (array) => (evt) => {
     const currentFilmComponent = new PopupFilmDetailsView(currentObject);
     siteBodyElement.classList.add('hide-overflow');
     const secondPopup = document.querySelector('.film-details');
-    if (secondPopup) {    //Проверка на открытие нескольких Popups
-      secondPopup.remove();
-    }
-    render(siteFooter, currentFilmComponent.element, RenderPosition.AFTEREND);
-    const commentsContainer = currentFilmComponent.element.querySelector('.film-details__comments-list');
-    currentObject.comments.forEach((element) => {
-      render(commentsContainer, new CommentView(element).element, RenderPosition.BEFOREEND);
-    });
-
     const parentBodyElement = document.querySelector('body');
     const removeComponent = (parent, component) => {
       parent.removeChild(component.element);
@@ -97,18 +88,32 @@ const getChoosenFilmElement = (array) => (evt) => {
         document.removeEventListener('keydown', onEscKeyDown);
       }
     };
-    currentFilmComponent.setClickCloseButtonHandler(() => {     //вешаем обработчик
+    document.addEventListener('keydown', onEscKeyDown);
+
+    if (secondPopup) {    //Проверка на открытие нескольких Popups
+      secondPopup.remove();
+      document.removeEventListener('keydown', onEscKeyDown);
+    }
+    render(siteFooter, currentFilmComponent.element, RenderPosition.AFTEREND);
+    const commentsContainer = currentFilmComponent.element.querySelector('.film-details__comments-list');
+    currentObject.comments.forEach((element) => {
+      render(commentsContainer, new CommentView(element).element, RenderPosition.BEFOREEND);
+    });
+
+
+    currentFilmComponent.setClickCloseButtonHandler(() => {     //вешаем обработчик клика
       removeComponent(parentBodyElement, currentFilmComponent);
       document.removeEventListener('keydown', onEscKeyDown);
     });
 
-    document.addEventListener('keydown', onEscKeyDown);
 
   }
 };
 
-document.querySelector('.films').addEventListener('click', getChoosenFilmElement(films));
-
+//document.querySelector('.films').addEventListener('click', getChoosenFilmElement(films));
+filmsListComponent.setClickFilmHandler(() => {
+  getChoosenFilmElement(films);
+});
 
 render(siteMainElement, new SiteStatsView().element, RenderPosition.BEFOREEND);
 const statisticElement = document.querySelector('.statistic');

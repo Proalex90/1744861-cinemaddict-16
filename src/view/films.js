@@ -15,4 +15,14 @@ export default class SiteFilmsView extends AbstractView {
     return createFilmsTemlate();
   }
 
+  setClickFilmHandler = (callback) => {
+    this._callback.detailsClick = callback;
+    this.element.addEventListener('click', this.#filmClickHandler);
+  }
+
+  #filmClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.detailsClick();
+
+  }
 }
