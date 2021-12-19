@@ -1,3 +1,6 @@
-export const ALL_FILMS = 23;
-export const FILMS_COUNT_PER_STEP = 5;
-export const FILMS_EXTRA_COUNT = 2;
+export const FilmViewParam = {
+  ALL: 23,
+  COUNT_PER_STEP: 5,
+  COUNT_EXTRA: 2,
+};
+
