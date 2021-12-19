@@ -1,4 +1,4 @@
-import { createElement } from '../render.js';
+import AbstractView from './abstract-view.js';
 
 const reaction = {
   smile: './images/emoji/smile.png',
@@ -35,26 +35,15 @@ const createComment = (comment) => `<li class="film-details__comment">
   </div>
 </li>`;
 
-export default class CommentView {
-  #element = null;
+export default class CommentView extends AbstractView {
   #comment = null;
 
   constructor(comment) {
+    super();
     this.#comment = comment;
-  }
-
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-    return this.#element;
   }
 
   get template() {
     return createComment(this.#comment);
-  }
-
-  removeElement() {
-    this.#element = null;
   }
 }
