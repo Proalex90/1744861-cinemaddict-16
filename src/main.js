@@ -1,5 +1,6 @@
 import { render, RenderPosition } from './render.js';
 import { onKeyDownEsc } from './utils.js';
+import { ALL_FILMS, FILMS_COUNT_PER_STEP, FILMS_EXTRA_COUNT } from './consts.js';
 import SiteMenuView from './view/menu.js';
 import SiteProfileView from './view/profile.js';
 import SiteMenuSortView from './view/menu-sort.js';
@@ -27,8 +28,6 @@ render(siteMainElement, filmsListComponent.element, RenderPosition.BEFOREEND);
 const siteFilmsContainer = filmsListComponent.element.querySelector('.films-list__container');//Ищем в экземпляре необходимое место вставки карточки фильма
 
 //Films
-const ALL_FILMS = 23;
-const FILMS_COUNT_PER_STEP = 5;
 const films = Array.from({ length: ALL_FILMS }, generateFilmCard);
 if (films.length === 0) {
   render(siteFilmsContainer, new FilmsListEmptyView().element, RenderPosition.BEFOREEND);
@@ -40,7 +39,6 @@ if (films.length === 0) {
   render(filmsListComponent.element, new SiteFilmsExtraRatedView().element, RenderPosition.BEFOREEND);
   render(filmsListComponent.element, new SiteFilmsExtraCommentedView().element, RenderPosition.BEFOREEND);
 
-  const FILMS_EXTRA_COUNT = 2;
   const siteFilmsExtra = document.querySelectorAll('.films-list--extra');
   const siteFilmsExtraContainerTopRated = siteFilmsExtra[0].querySelector('.films-list__container');
   const siteFilmsExtraContainerMostCommented = siteFilmsExtra[1].querySelector('.films-list__container');
