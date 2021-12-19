@@ -110,10 +110,10 @@ const getChoosenFilmElement = (array) => (evt) => {
   }
 };
 
-//document.querySelector('.films').addEventListener('click', getChoosenFilmElement(films));
-filmsListComponent.setClickFilmHandler(() => {
+document.querySelector('.films').addEventListener('click', getChoosenFilmElement(films));
+/* filmsListComponent.setClickFilmHandler(() => {
   getChoosenFilmElement(films);
-});
+}); */
 
 render(siteMainElement, new SiteStatsView().element, RenderPosition.BEFOREEND);
 const statisticElement = document.querySelector('.statistic');
