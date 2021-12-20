@@ -1,5 +1,5 @@
 import { getDurationInFormat, getClassNameUserControleBar } from '../utils.js';
-import { createElement } from '../render.js';
+import AbstractView from './abstract-view.js';
 
 const activeClassName = 'film-details__control-button--active';
 
@@ -122,26 +122,27 @@ ${description}        </p>
 </section>`;
 };
 
-export default class PopupFilmDetailsView {
-  #element = null;
+export default class PopupFilmDetailsView extends AbstractView {
   #film = null;
 
   constructor(film) {
+    super();
     this.#film = film;
-  }
-
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-    return this.#element;
   }
 
   get template() {
     return createPopupFilmDetails(this.#film);
   }
 
-  removeElement() {
-    this.#element = null;
+  setClickCloseButtonHandler = (callback) => {
+    this._callback.closeClick = callback;
+    this.element.querySelector('.film-details__close-btn').addEventListener('click', this.#closeButtonClickHandler);
   }
+
+  #closeButtonClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.closeClick();
+
+  }
+
 }

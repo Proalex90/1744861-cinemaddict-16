@@ -1,5 +1,5 @@
 import { render, RenderPosition } from './render.js';
-import { onKeyDownEsc } from './utils.js';
+import { FilmViewParam } from './consts.js';
 import SiteMenuView from './view/menu.js';
 import SiteProfileView from './view/profile.js';
 import SiteMenuSortView from './view/menu-sort.js';
@@ -14,9 +14,10 @@ import PopupFilmDetailsView from './view/popup.js';
 import { generateFilmCard } from './mocks/film.js';
 import CommentView from './view/comment.js';
 import SiteFooterStatisticsView from './view/footer-statistics.js';
-const siteHeaderElement = document.querySelector('.header');
-const siteMainElement = document.querySelector('.main');
-const siteFooter = document.querySelector('.footer');
+const siteBodyElement = document.querySelector('body');
+const siteHeaderElement = siteBodyElement.querySelector('.header');
+const siteMainElement = siteBodyElement.querySelector('.main');
+const siteFooter = siteBodyElement.querySelector('.footer');
 
 
 render(siteHeaderElement, new SiteProfileView().element, RenderPosition.BEFOREEND); //Элемент профайла
@@ -27,40 +28,37 @@ render(siteMainElement, filmsListComponent.element, RenderPosition.BEFOREEND);
 const siteFilmsContainer = filmsListComponent.element.querySelector('.films-list__container');//Ищем в экземпляре необходимое место вставки карточки фильма
 
 //Films
-const ALL_FILMS = 23;
-const FILMS_COUNT_PER_STEP = 5;
-const films = Array.from({ length: ALL_FILMS }, generateFilmCard);
+const films = Array.from({ length: FilmViewParam.ALL }, generateFilmCard);
 if (films.length === 0) {
   render(siteFilmsContainer, new FilmsListEmptyView().element, RenderPosition.BEFOREEND);
 } else {
-  for (let i = 0; i < Math.min(films.length, FILMS_COUNT_PER_STEP); i++) {
+  for (let i = 0; i < Math.min(films.length, FilmViewParam.COUNT_PER_STEP); i++) {
     render(siteFilmsContainer, new FilmView(films[i]).element, RenderPosition.BEFOREEND);
   }
   //Extra
   render(filmsListComponent.element, new SiteFilmsExtraRatedView().element, RenderPosition.BEFOREEND);
   render(filmsListComponent.element, new SiteFilmsExtraCommentedView().element, RenderPosition.BEFOREEND);
 
-  const FILMS_EXTRA_COUNT = 2;
   const siteFilmsExtra = document.querySelectorAll('.films-list--extra');
   const siteFilmsExtraContainerTopRated = siteFilmsExtra[0].querySelector('.films-list__container');
   const siteFilmsExtraContainerMostCommented = siteFilmsExtra[1].querySelector('.films-list__container');
 
-  for (let i = 0; i < FILMS_EXTRA_COUNT; i++) {
+  for (let i = 0; i < FilmViewParam.COUNT_EXTRA; i++) {
     render(siteFilmsExtraContainerTopRated, new FilmView((films[i])).element, RenderPosition.BEFOREEND);
   }
-  for (let i = 0; i < FILMS_EXTRA_COUNT; i++) {
+  for (let i = 0; i < FilmViewParam.COUNT_EXTRA; i++) {
     render(siteFilmsExtraContainerMostCommented, new FilmView((films[i])).element, RenderPosition.BEFOREEND);
   }
-  if (films.length > FILMS_COUNT_PER_STEP) {
-    let renderedFilmsCount = FILMS_COUNT_PER_STEP;
+  if (films.length > FilmViewParam.COUNT_PER_STEP) {
+    let renderedFilmsCount = FilmViewParam.COUNT_PER_STEP;
     const buttonShowMoreComponent = new ButtonMoreView();
     render(siteFilmsContainer, buttonShowMoreComponent.element, RenderPosition.AFTEREND);
     buttonShowMoreComponent.element.addEventListener(('click'), (evt) => {
       evt.preventDefault();
       films
-        .slice(renderedFilmsCount, renderedFilmsCount + FILMS_COUNT_PER_STEP)
+        .slice(renderedFilmsCount, renderedFilmsCount + FilmViewParam.COUNT_PER_STEP)
         .forEach((film) => render(siteFilmsContainer, new FilmView(film).element, RenderPosition.BEFOREEND));
-      renderedFilmsCount += FILMS_COUNT_PER_STEP;
+      renderedFilmsCount += FilmViewParam.COUNT_PER_STEP;
 
       if (renderedFilmsCount >= films.length) {
         buttonShowMoreComponent.element.remove();
@@ -75,23 +73,47 @@ const getChoosenFilmElement = (array) => (evt) => {
     const currentElement = evt.target.closest('.film-card__link').dataset.id;
     const currentObject = array.find((element) => element.id === parseInt(currentElement, 10));
     const currentFilmComponent = new PopupFilmDetailsView(currentObject);
+    siteBodyElement.classList.add('hide-overflow');
+    const secondPopup = document.querySelector('.film-details');
+    const parentBodyElement = document.querySelector('body');
+    const removeComponent = (parent, component) => {
+      parent.removeChild(component.element);
+      parent.classList.remove('hide-overflow');
+    };
+
+    const onEscKeyDown = (evtEsc) => {
+      if (evtEsc.key === 'Escape' || evtEsc.key === 'Esc') {
+        evt.preventDefault();
+        removeComponent(parentBodyElement, currentFilmComponent);
+        document.removeEventListener('keydown', onEscKeyDown);
+      }
+    };
+    document.addEventListener('keydown', onEscKeyDown);
+
+    if (secondPopup) {    //Проверка на открытие нескольких Popups
+      secondPopup.remove();
+      document.removeEventListener('keydown', onEscKeyDown);
+    }
     render(siteFooter, currentFilmComponent.element, RenderPosition.AFTEREND);
     const commentsContainer = currentFilmComponent.element.querySelector('.film-details__comments-list');
     currentObject.comments.forEach((element) => {
       render(commentsContainer, new CommentView(element).element, RenderPosition.BEFOREEND);
     });
-    const closeButton = currentFilmComponent.element.querySelector('.film-details__close-btn');
-    const parentElement = document.querySelector('body');
-    const removeElement = () => parentElement.removeChild(currentFilmComponent.element);
 
-    closeButton.addEventListener('click', removeElement);
-    document.querySelector('body').addEventListener('keydown', (evtEsc) => onKeyDownEsc(evtEsc, removeElement));
+
+    currentFilmComponent.setClickCloseButtonHandler(() => {     //вешаем обработчик клика
+      removeComponent(parentBodyElement, currentFilmComponent);
+      document.removeEventListener('keydown', onEscKeyDown);
+    });
+
 
   }
 };
 
 document.querySelector('.films').addEventListener('click', getChoosenFilmElement(films));
-
+/* filmsListComponent.setClickFilmHandler(() => {
+  getChoosenFilmElement(films);
+}); */
 
 render(siteMainElement, new SiteStatsView().element, RenderPosition.BEFOREEND);
 const statisticElement = document.querySelector('.statistic');

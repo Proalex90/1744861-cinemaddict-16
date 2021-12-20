@@ -1,5 +1,5 @@
 import { getDurationInFormat, getClassNameUserControleBar } from '../utils.js';
-import { createElement } from '../render.js';
+import AbstractView from './abstract-view.js';
 
 const activeClassName = 'film-card__controls-item--active';
 export const createCardFilm = (film) => {
@@ -25,26 +25,15 @@ export const createCardFilm = (film) => {
 </div>
 </article>`;
 };
-export default class FilmView {
-  #element = null;
+export default class FilmView extends AbstractView {
   #film = null;
 
   constructor(film) {
+    super();
     this.#film = film;
-  }
-
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-    return this.#element;
   }
 
   get template() {
     return createCardFilm(this.#film);
-  }
-
-  removeElement() {
-    this.#element = null;
   }
 }
